@@ -1,0 +1,1 @@
+rsync -rtvzP /home/till/Website/bundestag.xyz/* root@bundestag.xyz:/var/www/bundestag/

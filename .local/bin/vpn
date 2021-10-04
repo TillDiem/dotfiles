@@ -1,0 +1,120 @@
+#!/bin/bash
+con=$1
+empty=false
+connected=false
+conto="None"
+#This script sets up the VPN as following
+# type in vpn and then either D, ETH or a Countrycode.
+# If a countrycode is given, all other vpn connections are terminated and proton connects to the country.
+# If D is given, all vpn connections are aborted
+# If ETH is given, all running vpn instances are aborted and openconnect connects to the ETH
+# If nothing is given and a vpn is currently running, it gets aborted. If no vpn is connected, it connects to the netherlands
+
+#function to test if arguments are given
+function testempty {
+	if [ -z "$con" ] ; then
+		empty=true
+	else
+		empty=false
+	fi
+
+
+}
+
+
+#function to test connection
+function testcon {
+	if [ $( pgrep -c openconnect ) -gt 0 ] ; then
+		connected=true
+		conto="ETH"
+	fi
+	if [ $( pgrep -c openvpn ) -gt 0 ] ; then
+		connected=true
+		conto="PROTON"
+	fi
+}
+
+
+#function to abort all current connections
+function abortconnection {
+	testcon
+	if [ "$conto" = "ETH" ] ; then
+		sudo pkill openconnect
+		notify-send "ETH aborted"
+		pkill -RTMIN+20 dwmblocks
+	elif [ "$conto" = "PROTON" ] ; then
+		sudo -s protonvpn disconnect
+		notify-send "VPN aborted"
+		pkill -RTMIN+20 dwmblocks
+
+	else notify-send "No connection to abort"
+	fi
+
+}
+
+
+function abortconnection2 {
+	testcon
+	if [ "$conto" = "ETH" ] ; then
+		sudo pkill openconnect
+		notify-send "ETH aborted"
+		pkill -RTMIN+20 dwmblocks
+
+	elif [ "$conto" = "PROTON" ] ; then
+		sudo -s protonvpn disconnect
+		notify-send "VPN aborted"
+		pkill -RTMIN+20 dwmblocks
+
+	fi
+
+}
+
+
+function ETHconnect {
+	testcon
+	if [ "$conto" != "ETH" ] ; then
+	abortconnection2
+	notify-send "ETH VPN setup" "Enter Password"
+	dmenupass "Password for ETH-VPN:" | sudo openconnect -g student-net -u tilld@student-net.ethz.ch --passwd-on-stdin sslvpn.ethz.ch
+	pkill -RTMIN+20 dwmblocks
+	elif [ "$conto" = "ETH" ] ; then
+	abortconnection2
+	notify-send "ETH aborted"
+	pkill -RTMIN+20 dwmblocks
+	fi
+
+}
+
+function PROTONconnect {
+	testcon
+
+	abortconnection2
+	sudo -s protonvpn c --cc "$con"
+	notify-send " VPN to $con enabled"
+	pkill -RTMIN+20 dwmblocks
+}
+
+function DEFAULT {
+
+	if [ "$connected" = "true" ] ; then abortconnection
+	else sudo -s protonvpn c --cc NL ;
+	 notify-send "VPN to NL enabled" ;
+	 pkill -RTMIN+20 dwmblocks
+	fi
+
+}
+
+
+
+
+testempty
+testcon
+if [ "$empty" = "true" ] ; then  DEFAULT
+else
+	if [ "$con" = "D" ] ; then
+		abortconnection
+	elif [ "$con" = "ETH" ] ; then
+		ETHconnect
+	else PROTONconnect
+	fi
+fi

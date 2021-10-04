@@ -1,0 +1,37 @@
+#!/bin/sh
+#A script that launches documents in their respective viewers
+#either via dmenu or fzf depending on the context
+ppid () { ps -p ${1:-$$} -o ppid=; }
+shell="$(ps aux | grep $( ppid ) | head -n1 | awk '{print $11}' )"
+document_dirs="/home/till/Documents/Polybox/MSc/MasterThesis/* /home/till/Downloads/* "
+#force launch dmenu via cmd
+if [ "$1" = "launchdmenu" ]; then
+	file="$( find $document_dirs -type f | sed "s|$HOME|~|"|  dmenu -i -l 10 -p 'open what file?')"
+#/bin/sh means it's probably from dmenu_run (it's ugly but works)
+elif [ ! "$shell" = "/bin/sh" ]; then
+	currentdir="$(pwd)"
+	file="$( find $document_dirs -type f | sed "s|$HOME|~|" |  fzf -e --query="$*")"
+	path="$(printf '%s%s' "$HOME" "${file//\~/}")"
+	[ -z "$file" ] && exit
+	cd "$( dirname "$path" )" || exit
+	if rifle -l "$path" | head -n1 | grep -q 'EDITOR';then
+		rifle "$path"
+	else
+		rifle "$path" &
+	fi
+	cd "$currentdir" || exit
+	exit
+#launch dmenu as it's probably in dmenu_run
+else
+	file="$( find $document_dirs -type f | sed "s|$HOME|~|" | dmenu -i -l 10 -p 'open what file?' -it "$*" )"
+fi
+#process selection if it's from dmenu
+[ -z "$file" ] && exit
+echo "$file" | sed "s|\~|$HOME|" |
+	while read -r pathfile; do
+	if rifle -l "$pathfile" | head -n1 | grep -q 'EDITOR';then
+		st rifle "$pathfile" &
+	else
+		rifle "$pathfile" &
+	fi
+done

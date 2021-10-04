@@ -1,0 +1,62 @@
+#!/bin/zsh
+#script to show output of stocks in statusbar
+#Two functions since direction makes no real sense for currency
+
+#result=0
+#$1 Aktienkuerzel $2 Gewuenschter Ausgabenname
+function output {
+	#Ausgabe Aktienkurs + direciton
+	#fuer stocks: $1 Kuerzel, $2 Aktien Preis $3 absolute veranderung aktienpreis $4 prozentuale anderung aktienpreis
+	MSCI=$( NO_COLOR=1 stocks $1 | awk '{print $2}' )
+	directionMSCI=$( NO_COLOR=1 stocks $1 | awk '{print $3}')
+
+	if [ $( echo $directionMSCI '>' 0.0 | bc -l ) -gt 0 ] ; then result="↗$2 $MSCI"
+	fi
+ if [ $( echo $directionMSCI '<' 0.0 | bc -l ) -gt 0 ] ; then result="↘$2 $MSCI"
+ fi
+
+
+
+
+
+#	[ $( echo $directionMSCI '=' 0.0  | bc -l ) ] && result= "$2 $MSCI"
+#	echo "test3"
+}
+
+function outputX {
+	#ausgabe wechselkurs (X)
+	#fuer stocks: $1 Kuerzel, $2 Aktien Preis $3 absolute veranderung aktienpreis $4 prozentuale anderung aktienpreis
+
+	CHF=$( NO_COLOR=1 stocks $1 | awk '{print $2}' )
+	directionCHF=$( NO_COLOR=1 stocks $1 | awk '{print $3}')
+
+	if [ $( echo "$directionCHF < 0.0" | bc ) ] ; then
+		resultX="$2 $CHF"
+	elif [ $( echo "$directionCHF > 0.0" | bc ) ] ; then
+		resultX="$2 $CHF"
+	else resultX="$2 $CHF"
+	fi
+}
+
+
+output H4ZJ.DE  MSCI
+result1=$result
+
+output ^GDAXI DAX
+result2=$result
+
+outputX CHFEUR=X CHF
+result3=$resultX
+
+output SAP.DE SAP
+result4=$result
+
+output XDEM.L MOM
+result5=$result
+
+output NCLH NCLH
+result6=$result
+
+
+out="Results: \n $result1\n $result4 \n $result2 \n $result6 \n $result5 \n $result3"
+echo $out

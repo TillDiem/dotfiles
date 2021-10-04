@@ -1,0 +1,5 @@
+#!/bin/sh
+while true; do
+	mpc idle > /dev/null
+	pkill -RTMIN+11 dwmblocks
+done

@@ -1,0 +1,2 @@
+#!/bin/bash
+cat ~/.config/task/.task/pending.data | awk -F entry '{print $1}' | awk -F \" '{print $2}' | sed "s/\"//g" | sed "s/^/[1] /g" > ~/.local/share/calcurse/todo

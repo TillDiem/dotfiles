@@ -1,0 +1,25 @@
+#!/bin/bash
+rmflag=$3
+lan=$2
+
+if [ -z "$rmflag" ] ; then
+
+	if [ -z "$lan" ] ; then
+		lan=en
+	fi
+
+	FILE=~/.cache/wikipedia/"$1"_$lan.pdf
+	if [ -f "$FILE" ] ; then   #test if local file already exists
+		zathura ~/.cache/wikipedia/"$1"_$lan.pdf  #if local file exists, use local
+	else
+		wikit "$1" -a -l $lan | sed "s/^\s*$/.NH/g" | sed "s/\s\-\+$/.PP/g" | sed '1c.TL' | sed '/.TL/{G;}' | sed "2c$1" | sed 's/[[:alpha:]]/\u&/' | sed '3c\ '  > ~/.cache/wikipedia/"$1"
+
+		groff -K utf-8 -ms ~/.cache/wikipedia/"$1" -T pdf 1> ~/.cache/wikipedia/"$1"_$lan.pdf 2> /dev/null
+		zathura ~/.cache/wikipedia/"$1"_$lan.pdf 2> /dev/null
+		rm ~/.cache/wikipedia/"$1"
+	fi
+elif [ "$rmflag" = "r" ] ; then
+	rm ~/.cache/wikipedia/"$1"_$lan.pdf
+else
+	echo "Unknown Third Argument"
+fi

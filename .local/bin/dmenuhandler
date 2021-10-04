@@ -1,0 +1,50 @@
+#!/bin/sh
+# Feed this script a link and it will give dmenu
+# some choice programs to use to open it.
+
+makepathabsolute(){
+	if echo "$1" | grep -qE '^/'; then
+		dl_location="$1"
+	else
+		dl_location="$HOME/$1"
+	fi
+	echo "$dl_location"
+}
+
+choices="$(printf "mpv\\ncopy url\\nqueue download\\nrifle file\\nqueue youtube-dl\\nbrowser\\nrip media\\nrip zoom\\nwiki\\ncast")"
+if echo "$1" | grep -q "4chan"; then
+	choices="$(printf '%s\\nwatch thread' "$choices")"
+fi
+choice="$(echo "$choices" | dmenu -i -p "Open link with what program?")"
+case "$choice" in
+	"copy url") echo "$1" | xclip -selection clipboard ;;
+	mpv) setsid mpv --quiet --ytdl-format='bestvideo[height<=1080]+bestaudio/best[height<=1080]' "$1" & ;;
+	"mpv (loop)") setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%s) -quiet --loop "$1" >/dev/null 2>&1 & ;;
+	"queue download") name="$( dmenuinput 'Name for file:' )"
+		[ -z "$name" ] && tsp curl -C - -LO "$1" >/dev/null 2>&1
+		tsp curl -C - -L -o $name "$1" >/dev/null 2>&1 ;;
+	"queue youtube-dl") youtube-dl --add-metadata -i -o $HOME/'%(upload_date)s-%(title)s.%(ext)s' "$1" >/dev/null 2>&1;;
+	cast) setsid $TERMINAL -e mkchromecast -y $1 --video --control
+		;;
+	browser) setsid "$BROWSER" "$1" >/dev/null 2>&1 & ;;
+	#feh) setsid feh "$1" >/dev/null 2>&1 & ;;
+	#w3m) w3m "$1" >/dev/null 2>&1 ;;
+	#"mpv (float)") setsid mpv --input-ipc-server=/tmp/mpvsoc$(date +%s) --geometry=+0-0 --autofit=30%  --title="mpvfloat" "$1" >/dev/null 2>&1 & ;;
+	"rifle file") curl -L "$1" -o "/tmp/riflefile"
+			rifle /tmp/riflefile;;
+	"watch thread") dest="$(dmenuinput 'name of folder:')"
+			[ -z "$dest" ] && exit
+			echo "dmenuhandler:$dest"
+			mkdir -p "$(makepathabsolute "$dest")"
+			threadwatcher add "$1" "$dest" &
+			notify-send "dmenuhandler" "Thread watcher started. Download initialized.";;
+	"rip media") dest="$(dmenuinput 'name of folder:')"
+			lynx --dump --nonumbers --listonly "$1" | grep -E "\.(webp|webm|mp4|gif|jpg|jpeg|png|pdf|epub|mobi|djvu)" | sort -u | xargs wget --directory-prefix="$HOME/$dest"
+			notify-send "dmenuhandler" "all media ripped into $dest";;
+
+	"rip zoomlinks") dest="$(dmenuinput 'name of folder:')"
+			zoom-video-ripper "$1" "$dest" ;;
+	"wiki") notify-send "Wikipedia" "Downloading Started"
+		wikit ""$1"" -l de -a > /tmp/wikit
+		st -e less /tmp/wikit;;
+esac

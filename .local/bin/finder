@@ -1,0 +1,2 @@
+searchterm="$(dmenuinput | xargs fd -H -a -E '.cache' -E '.local/share/'| dmenu -l 10)"
+st -e rifle "$searchterm"

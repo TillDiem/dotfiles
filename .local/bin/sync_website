@@ -1,0 +1,1 @@
+rsync -rtvzP /home/till/Website/dieminger.ch/* root@dieminger.ch:/var/www/dieminger/

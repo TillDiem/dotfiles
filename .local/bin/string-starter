@@ -1,0 +1,8 @@
+#!/bin/sh
+vidlist="
+String Recording	https://video.ethz.ch/lectures/d-phys/2020/autumn/402-0897-00L.html
+String Live		https://video.ethz.ch/live/lectures/hoenggerberg/hpv/hpv-g-5/projector.html
+#"
+
+
+echo "$vidlist" | grep -P "^$(echo "$vidlist" | grep "https:" | sed 's/\t.*//g' | dmenu -i -p "Learn about what? (ESC to cancel)" -l 20 | awk '{print $1}')\s" | sed 's/.*\t//' | xargs -r qutebrowser

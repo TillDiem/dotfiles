@@ -1,0 +1,7 @@
+
+lan=$2
+if [ -z "$lan" ] ; then
+	lan=en
+fi
+
+wikit -a -l $lan $1 | LESSCHARSET=utf-8 less

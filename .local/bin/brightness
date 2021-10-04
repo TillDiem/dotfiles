@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo -s echo $(( $1*242 )) > /sys/class/backlight/intel_backlight/brightness

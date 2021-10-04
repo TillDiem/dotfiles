@@ -1,0 +1,7 @@
+#!/bin/bash
+if [[ "$( acpi -b | awk '{print $3}')" = "Discharging," ]] ; then
+if [[ "$( date --date="$(acpi -b | awk '{print $5}')" '+%s')" < "$( date --date="00:30:00" '+%s')" ]] ; then
+	notify-send -t 10000 -u critical "Aufladen" " $( acpi -b | awk '{print $5}') verbleibend"
+
+fi
+fi

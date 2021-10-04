@@ -1,0 +1,25 @@
+#!/bin/sh
+starting=$1
+while getopts 'ZHh' flag; do
+  case "${flag}" in
+    Z) starting='Zentrum' ;;
+    H) starting='Hongg' ;;
+    h) starting='Haldenegg' ;;
+    *) print_usage
+       exit 1 ;;
+  esac
+done
+
+linklink="https://ethz.ch/content/dam/ethz/associates/services/Service/mobilitaet-transport/AH_ETH_ab_14._September_2020.pdf"
+linkpath=~/.local/share/ETH_link/
+notify-send "ETHZ LINK" "Version vom 14. Sept. 2020"
+
+if [ $starting = "Zentrum" ]; then
+	zathura "$linkpath/zent.pdf"
+elif [ $starting = "Hongg" ]; then
+	zathura "$linkpath/Hongg.pdf"
+elif [ $starting = "Haldenegg" ]; then
+	zathura "$linkpath/Haldenegg.pdf"
+else
+	zathura $linkpath/timetable.pdf
+fi

@@ -1,0 +1,44 @@
+#!/bin/sh
+#Print the next appointment for the day for statusbar
+#or generate notification for upcoming appointment
+
+case $BLOCK_BUTTON in
+	1) notify-send "$( calcurse -d3 | awk -F "->" '{print $1}' | tr "\n" " " | sed -e 's/-/\n/g' | sed 's/^ *//g')";;  #"$(calcurse -d3 | awk -F "->" '{print $1}' | tr "\n" " "| sed -e 's/-/\n/g' | tr "\t" " ")" ;; "$(calcurse -d3 | sed '/^\ -/d' | tr "\t" " ")";;
+	2) setsid "$TERMINAL" -e calcurse & ;;
+	3) task add  "$(calcurse --next | sed -n '2,2p' | awk '{print $2}')" && notify-send "Task added" "$(calcurse --next | sed -n '2,2p' | awk '{print $2}')" && todosync ;;
+esac
+
+diff=$(calcurse --next | sed -n 's/^\s*//; s/\[//;s/\]//p' | cut -f1 -d ' ' | perl -pe 's/0([0-9])/\1/g' )
+if [ -n "$diff" ]; then
+	secs=$(( $(echo "$diff" | cut -f1 -d ':') * 3600  + $(echo "$diff" | cut -f2 -d ':') *60 ))
+	time_appointment="$(date --date "@$(( $( date +'%s' ) + $secs ))" +"%s")"
+	appointment="$(calcurse --next | tail -n1 | awk '{$1=""; print $0}' | sed 's/^\s*//')"
+
+	time_apptplus10="$(date --date "@$(( $( date +'%s' ) + $secs - 600 ))" +"%s")"
+	#shorten lecture appointments to just the name of lecture without profs
+	if [ "${#appointment}" -gt 20 ]; then
+		appointment="$(echo "$appointment" | sed -E 's/\(([VUG])\).*/(\1)/')"
+	fi
+	if [ "$1" = "notif" ]; then
+		if [ $(date +%s) -gt $time_apptplus10 ]; then
+			msg="$(printf '%s\n%s' "$(date --date "@$time_appointment" +'%H:%M')" "$appointment")"
+			notify-send "Appointment coming up" "$msg"
+		fi
+		midnight=$(( $(date --date "$(date | sed 's/..:..:../23:59:59/; s/ PM//; s/ AM//')" +%s) + 1 ))
+		if [ $midnight -gt "$time_appointment" ]; then
+			if [ ! -f /tmp/nodunst ]; then
+				printf '%s %s' "$(date --date "@$time_appointment" +'%H:%M')" "$appointment"
+			fi
+		fi
+
+
+	else
+		midnight=$(( $(date --date "$(date | sed 's/..:..:../23:59:59/; s/ PM//; s/ AM//')" +%s) + 1 ))
+		if [ $midnight -gt "$time_appointment" ]; then
+			if [ ! -f /tmp/nodunst ]; then
+				printf '%s %s' "$(date --date "@$time_appointment" +'%H:%M')" "$appointment"
+			fi
+		fi
+	fi
+fi
+printf '\n'

@@ -1,0 +1,1 @@
+owncloudcmd -u tilld -p "$(pass show ETH/mail)" /home/till/Documents/Polybox https://polybox.ethz.ch

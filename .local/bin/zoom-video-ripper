@@ -1,0 +1,13 @@
+#!/bin/sh
+lynx --dump --nonumbers --listonly "$1" | grep -E 'https:\/\/.*.zoom.us\/rec\/' > /tmp/zoomdl_links
+
+mkdir -p "$2"
+numberoffiles=$( wc -l /tmp/zoomdl_links | cut -d' ' -f1 )
+
+i=0
+while IFS= read -r line; do
+	i=$((i+1))
+	notify-send "zoom ripper" "Downloading File $i of $numberoffiles"
+	zoomdl -u "$line" -f "$2/File_$i"
+done < /tmp/zoomdl_links
+rm /tmp/zoomdl_links

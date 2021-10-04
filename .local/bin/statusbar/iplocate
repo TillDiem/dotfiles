@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Gets your public ip address checks which country you are in and
+# displays that information in the statusbar
+#
+# https://www.maketecheasier.com/ip-address-geolocation-lookups-linux/
+
+ifinstalled "geoip" || exit
+addr="$(curl ifconfig.me 2>/dev/null)" || exit
+con="$( geoiplookup "$addr" | sed 's/.*, //' )"
+result=$con
+if [[ "$con" = "Switzerland" ]] ; then
+	result="🇨🇭"
+elif [[ "$con" = "United States" ]] ; then
+	result="🇺🇸"
+elif [[ "$con" = "Netherlands" ]] ; then
+	result="🇳🇱"
+elif [[ "$con" = "Germany" ]] ; then
+	result="🇩🇪"
+elif [[ "$con" = "Russia" ]] ; then
+	result="🇷"
+else result=$con
+fi
+
+echo "$result"

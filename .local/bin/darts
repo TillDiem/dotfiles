@@ -1,0 +1,57 @@
+#!/bin/bash
+
+echo "Enter number of players:"
+read -r noplayers
+
+for i in $(seq "$noplayers") ; do
+	echo "Enter name of player number $i"
+	read -r name[i]
+done
+echo "Enter starting score:"
+read -r initscore
+for i in $(seq "$noplayers"); do
+	score[i]=$initscore
+done
+
+
+
+while ! echo "${score[*]}" | tr ' ' '\n' | grep -q '^0'; do
+	for i in $(seq "$noplayers") ; do
+		echo "Points for ${name[i]}:"
+		read -r points[i]
+		score[i]=$( echo "${score[i]} - ( ${points[i]} )"  | bc )
+		if [ ${score[i]} -lt 0 ] ; then
+			sequence="$(echo "${points[i]}" | tr '+' ' ')"
+			score[i]="$(( score[i] + ( ${points[i]} ) ))"
+			for point in $sequence; do
+				[ ${score[i]} -eq 0 ] && break
+				score[i]="$(( score[i] - point ))"
+				[ ${score[i]} -lt 0 ] && score[i]="$(( -1 * score[i] ))"
+			done
+			[ ${score[i]} -eq 0 ] || echo "You are just too good!"
+		fi
+		echo "${name[i]} is at ${score[i]} points"
+		if [[ ${score[i]} = 0 ]] ; then
+			echo "${name[i]} reached zero. Congratulations! ${name[*]:i+1} has (have) one more try.";
+			start=$( echo "($i + 1)" | bc)
+			for j in $(seq "$start" "$noplayers") ; do
+					echo "Points for ${name[j]}:"
+					read -r points[j];
+					score[j]=$( echo "${score[j]} - ( ${points[j]} )" | bc ) ;
+					if [ "${score[i]}" -lt 0 ] ; then
+						echo "You are just too good!";
+						score[i]=$( echo "- ${score[i]}" | bc );
+					fi
+					echo "${name[j]} is at ${score[j]} points" ;
+			done
+			echo "The winner(s) is (are)";
+			for h in $(seq "$noplayers") ; do
+				if [ ${score[h]} = 0 ] ; then
+					echo "${name[h]}"
+				fi
+			done
+			exit 0
+		fi
+	done
+done
+exit 0

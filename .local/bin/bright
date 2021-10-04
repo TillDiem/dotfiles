@@ -1,0 +1,19 @@
+#!/bin/sh
+path="/sys/class/backlight/intel_backlight"
+max_brightness="$(cat "$path/max_brightness")"
+
+case $1 in
+	"set")	brightness_int=$(( $2 * max_brightness / 100 ))
+		echo "$brightness_int" > "$path/brightness";;
+	"inc")	current_brightness="$(cat "$path/brightness")"
+		current_brightness_percent="$(( current_brightness * 100 / max_brightness ))"
+		new_brightness_percent="$(( current_brightness_percent + $2 ))"
+		if [ $new_brightness_percent -gt 99 ]; then
+			new_brightness_percent=100
+		elif [ $new_brightness_percent -lt 0 ]; then
+			new_brightness_percent=0
+		fi
+		bright set $new_brightness_percent;;
+	"dec")	bright inc -"$2";;
+	*) exit 1;;
+esac
