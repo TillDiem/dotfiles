@@ -1,0 +1,28 @@
+[Default Applications]
+application/pdf=org.pwmt.zathura-cb.desktop;
+application/postscript=pdf.desktop;
+application/rss+xml=rss.desktop;
+application/x-bittorrent=torrent.desktop;
+image/gif=img.desktop;
+image/png=img.desktop;
+inode/directory=file.desktop;
+message/rfc822=userapp-Thunderbird-L369J0.desktop;
+text/plain=text.desktop;
+text/x-shellscript=text.desktop;
+text/x-tex=text.desktop;
+video/x-matroska=video.desktop;
+x-scheme-handler/eclipse+command=_usr_lib_eclipse_.desktop;
+x-scheme-handler/lbry=lbry.desktop;
+x-scheme-handler/magnet=torrent.desktop;
+x-scheme-handler/mailto=userapp-Thunderbird-L369J0.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-TS9NY0.desktop;
+
+[Added Associations]
+application/gpx+xml=qmapshack.desktop;org.pwmt.zathura.desktop;
+application/pdf=okularApplication_pdf.desktop;org.pwmt.zathura-pdf-mupdf.desktop;
+application/zip=org.gnome.Nautilus.desktop;
+image/jpeg=sxiv.desktop;
+image/png=sxiv.desktop;
+message/rfc822=userapp-Thunderbird-L369J0.desktop;
+x-scheme-handler/mailto=userapp-Thunderbird-L369J0.desktop;
+x-scheme-handler/tg=userapp-Telegram Desktop-TS9NY0.desktop;

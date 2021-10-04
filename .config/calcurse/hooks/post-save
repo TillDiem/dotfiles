@@ -1,0 +1,2 @@
+appointments
+pkill -RTMIN+7 dwmblocks
