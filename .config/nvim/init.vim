@@ -22,9 +22,11 @@ Plug 'ap/vim-css-color'
 Plug 'lervag/vimtex'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'dense-analysis/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-scripts/AutoComplPop'
 Plug 'spolu/dwm.vim'
 Plug 'jamessan/vim-gnupg'
+Plug 'rhysd/vim-grammarous'
 call plug#end()
 
 set bg=light
@@ -46,7 +48,7 @@ set clipboard+=unnamedplus
 	autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Goyo plugin makes text more readable when writing prose:
-	map <leader>f :Goyo \| set bg=light \| set linebreak<CR>
+"	map <leader>f :Goyo \| set bg=light \| set linebreak<CR>
 
 " Spell-check set to <leader>o, 'o' for 'orthography':
 	map <leader>o :setlocal spell! spelllang=en_us<CR>
@@ -193,9 +195,9 @@ autocmd FileType tex inoremap ;m \begin{align}<Enter><Enter>\end{align}<Esc>ki
 	autocmd FileType tex inoremap 	,tabb \begin{tabbing}<Enter>\hspace*{3cm}\=\hspace*{3cm}\= \kill<Enter>\end{tabbing}<Enter><Enter><++><Esc>3kA<Enter>
 	autocmd FileType tex inoremap 	,txt  \text{}<++><Esc>T{i
 	autocmd FileType tex inoremap 	,sfr  \sfrac{}{<++>}<++><Esc>2T{i
-autocmd FileType tex inoremap ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
-
-
+        autocmd FileType tex inoremap ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
+	autocmd FileType tex inoremap	,fra \begin{frame}<Enter><Enter>\end{frame}<Enter><Enter><++><Esc>3kA\frametitle{ }<Esc>i
+	autocmd FileType tex inoremap	,fi \begin{figure}<Enter><Enter>\end{figure}<Enter><Enter><++><Esc>3kA\includegraphics[]{<++>}<Esc>6hi
 
 """.bib
 	autocmd FileType bib inoremap	,a @article{<Enter>author<Space>=<Space>{<++>},<Enter>year<Space>=<Space>{<++>},<Enter>title<Space>=<Space>{<++>},<Enter>journal<Space>=<Space>{<++>},<Enter>volume<Space>=<Space>{<++>},<Enter>pages<Space>=<Space>{<++>},<Enter>}<Enter><++><Esc>8kA,<Esc>i
@@ -219,5 +221,8 @@ let g:ale_linters = {'python': ['flake8']}
 let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'], 'python': ['black', 'isort']}
 let g:ale_fix_on_save = 1
 set completeopt+=noinsert
+
+
+" GPG: Handeling of certain file types
 let g:GPGPreferArmor=1
 let g:GPGDefaultRecipients=["tilld@student.ethz.ch"]

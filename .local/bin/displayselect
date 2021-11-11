@@ -73,10 +73,11 @@ screens=$(echo "$allposs" | awk '/ connected/ {print $1}')
 	{ onescreen "$screens"; postrun; notify-send "💻 Only one screen detected." "Using it in its optimal settings...";  exit ;}
 
 # Get user choice including multi-monitor and manual selection:
-chosen=$(printf "%s\\nmulti-monitor\\nmanual selection" "$screens" | dmenu -i -p "Select display arangement:") &&
+chosen=$(printf "%s\\nmulti-monitor\\nmanual selection\\ntop" "$screens" | dmenu -i -p "Select display arangement:") &&
 case "$chosen" in
 	"manual selection") arandr ; exit ;;
 	"multi-monitor") multimon ;;
+	"top") xrandr --output eDP-1 --primary --mode 2560x1440 --pos 0x1080 --rotate normal --output DP-1 --off --output HDMI-1 --off --output DP-2 --off --output HDMI-2 --mode 1920x1080 --pos 271x0 --rotate normal;;
 	*) onescreen "$chosen" ;;
 esac
 

@@ -26,3 +26,4 @@ image/png=sxiv.desktop;
 message/rfc822=userapp-Thunderbird-L369J0.desktop;
 x-scheme-handler/mailto=userapp-Thunderbird-L369J0.desktop;
 x-scheme-handler/tg=userapp-Telegram Desktop-TS9NY0.desktop;
+text/markdown=nvim.desktop;
