@@ -419,7 +419,8 @@
       },
       "sysPrefix": "/usr",
       "fileHash": "53aab30d13af0c0f6d49180dfeeba3f0749599babb127ca0a6f32dec2e630ba4427a895004cd20c994320dab564fabec03504b4bc45d293842d9cc7a96066fa6",
-      "type": "Unknown"
+      "type": "Unknown",
+      "cachedEntry": true
     },
     "preferredGlobalPyInterpreter": {
       "architecture": 3,
@@ -1318,6 +1319,7 @@
       "sysPrefix": "/usr",
       "fileHash": "53aab30d13af0c0f6d49180dfeeba3f0749599babb127ca0a6f32dec2e630ba4427a895004cd20c994320dab564fabec03504b4bc45d293842d9cc7a96066fa6",
       "type": "Unknown",
+      "cachedEntry": true,
       "displayName": "Python 3.9.7 64-bit"
     },
     "/bin/python.interpreter.Details.v7": {

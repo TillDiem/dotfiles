@@ -30,7 +30,11 @@ Plug 'rhysd/vim-grammarous'  " Grammar check
 Plug 'nvim-lua/plenary.nvim'  " ni idea
 Plug 'nvim-telescope/telescope.nvim' " In vim search
 Plug 'arcticicestudio/nord-vim'  " Colorscheme
-Plug 'ayu-theme/ayu-vim' " Colorscheme
+Plug 'ayu-theme/ayu-vim' " colorscheme
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Colorfull Icons for NERDTree
+Plug 'ryanoasis/vim-devicons' "Icons for NERDTree
 call plug#end()
 
 set bg=dark
@@ -44,6 +48,7 @@ let ayucolor="dark" " for mirage version of theme
 colorscheme ayu
 
 let g:airline_theme='minimalist'
+
 " Some basics:
 	nnoremap c "_c
 	set nocompatible
@@ -70,14 +75,21 @@ let g:airline_theme='minimalist'
 " Splits open at the bottom and right, which is non-retarded, unlike vim defaults.
 	set splitbelow splitright
 
+
+
 " Nerd tree
+set guifont=DroidSansMono\ Nerd\ Font\ 11
+let g:WebDevIconsOS = 'Arch'
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
+let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['pdf'] = ''
+" If you have vim-devicons you can customize your icons for each file type.
 	map <leader>n :NERDTreeToggle<CR>
 	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
     if has('nvim')
         let NERDTreeBookmarksFile = stdpath('data') . '/NERDTreeBookmarks'
     else
         let NERDTreeBookmarksFile = '~/.vim' . '/NERDTreeBookmarks'
-    endif
+   endif
 
 " vimling:
 	nm <leader>d :call ToggleDeadKeys()<CR>
