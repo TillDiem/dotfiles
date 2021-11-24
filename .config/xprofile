@@ -29,7 +29,6 @@ export USE_WOLFRAM_LD_LIBRARY_PATH=1
 sleep 2
 #vpn NL &
 update_musicbar &  #Update Music in dmw instantly when changed
-
 #sleep 10
 #update &
 alias config='/usr/bin/git --git-dir=/home/till/.cfg/ --work-tree=/home/till'
