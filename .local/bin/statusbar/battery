@@ -25,7 +25,8 @@ do
 
 	# If it is discharging and 25% or less, we will add a ❗ as a warning.
 	 [ "$capacity" -le 25 ] && [ "$status" = "🔋" ] && warn="❗"
-	 [ "$capacity" -le 15 ] && [ "$status" = "🔋" ] && notify-send -u critical "Aufladen"
+	 [ "$capacity" -le 15 ] && [ "$status" = "🔋" ] && notify-send  "Aufladen"
+	 [ "$capacity" -le 5 ] && [ "$status" = "🔋" ] && notify-send -u critical "JETZT Aufladen"
 
 	printf "%s%s%s%% " "$status" "$warn" "$capacity"
 	unset warn

@@ -17,3 +17,8 @@ image/x-png;sxiv %s
 #Text
 text/x-tex;vim %s
 #text/html;firefox %s
+application/pgp-encrypted; gpg -d '%s'; copiousoutput;
+application/pgp-keys; gpg --import '%s'; copiousoutput;
+text/calendar; calendaradd %s
+
+#Text
