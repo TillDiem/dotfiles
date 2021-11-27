@@ -42,6 +42,7 @@ set go=a
 set mouse=a
 set nohlsearch
 set clipboard+=unnamedplus
+set cursorline
 
 set termguicolors     " enable true colors support
 let ayucolor="dark" " for mirage version of theme
@@ -125,26 +126,38 @@ let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['pdf'] = ''
 	autocmd VimLeave *.tex !texclear %
 " Automaticly compile dwmblocks
 
-autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
 " Ensure files are read as what I want:
 	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let g:vimwiki_global_ext = 0
+let g:GPGFilePattern = '*.\(gpg\|asc\|pgp\)\(.md\)\='  "encryption
 	map <leader>v :VimwikiIndex
-	"let g:vimwiki_list = [{'path': '~/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-	let g:vimwiki_list = [{'path': '~/Documents/vimwiki', 'syntax': 'markdown', 'ext': '.md'}]
-	"let g:vimwiki_list = [{'path': '~/Documents/vimwiki', 'path_html': '~/Documents', 'syntax': 'markdown', 'ext': '.md', 'custom_wiki2html': '~/test.sh'}]
-" let g:vimwiki_list = [{
-"   \ 'auto_export': 1,
-"   \ 'automatic_nested_syntaxes':1,
-"   \ 'path_html': '$HOME/Documents/vimwiki/HTML',
-"   \ 'path': '$HOME/Documents/vimwiki',
-"   \ 'template_path': '/home/till/',
-"   \ 'syntax': 'markdown',
-"   \ 'ext':'.md',
-"   \ 'template_default':'markdown',
-"   \ 'custom_wiki2html': '$HOME/Documents/vimwiki/HTML/test.sh',
-"   \ 'template_ext':'.html'
-" \}]
-	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
+	let g:vimwiki_list = [{'path': '~/Documents/vimwiki/General', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/Documents/vimwiki/MT', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/Documents/vimwiki/mykb', 'syntax': 'markdown', 'ext': '.md'}]
+"let g:vimwiki_list = [{
+"            \ 'auto_export': 1,
+            "\ 'auto_header' : 1,
+            "\ 'automatic_nested_syntaxes':1,
+  	    "\ 'path_html': '~/Documents/vimwiki/General/wiki2html/HTML',
+  	    "\ 'path': '~/Documents/vimwiki/General',
+	    "\ 'template_path': '~/Documents/vimwiki/General/wiki2html/',
+            "\ 'template_default':'template',
+            "\ 'template_ext':'.html',
+            "\ 'syntax': 'markdown',
+            "\ 'ext':'.md',
+  	    "\ 'custom_wiki2html': '~/Documents/vimwiki/General/wiki2html/wiki2html.sh',
+            "\ 'autotags': 1,
+            "\ 'list_margin': 0,
+            "\ 'links_space_char' : '_',
+            "\}]
+""let g:vimwiki_folding='expr'
+" let g:vimwiki_hl_headers = 1
+" let g:vimwiki_ext2syntax = {'.md': 'markdown'}
+
+
+
+
+
+autocmd BufWritePost ~/.local/src/dwmblocks/config.h !cd ~/.local/src/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
+autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
 	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff
 	autocmd BufRead,BufNewFile *.tex set filetype=tex
 
