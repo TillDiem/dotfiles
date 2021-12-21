@@ -1,12 +1,13 @@
 #!/bin/sh
-ifinstalled python && python -iq -c "print('Welcome to the Calculator')
+python -iq -c "print('Welcome')
 from numpy import *
 import sys
 import matplotlib.pyplot as plt
+def plot(a,b,f):
+	x = linspace(a,b,1000)
+	y = f(x)
+	plt.figure()
+	plt.plot(x,y)
+	plt.show()
 sys.ps1='❯'
-def plot(a, b, f):
-    x = linspace(a, b, 1000)
-    y = eval(f)
-    plt.plot(x, y)
-    plt.show()
 "

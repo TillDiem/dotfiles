@@ -30,6 +30,11 @@ alias chess='scid'
 alias mutt='neomutt'
 alias csv='sc-im'
 alias sl='ls'
+alias mykb='nvim ~/Documents/vimwiki/mykb/index.md'
+alias vmmt='nvim ~/Documents/vimwiki/MT/index.md'
+alias vm='nvim ~/Documents/vimwiki/General/index.md'
+
+
 # Colorize commands when possible.
 alias \
 	ls="ls -hN --color=auto --group-directories-first" \

@@ -61,6 +61,9 @@ settings:
     global: bold default_size default_family
   prompt.filebrowser:
     global: false
+  qt.args:
+    global:
+    - ppapi-widevine-path=/usr/lib/qt/plugins/ppapi/libwidevinecdm.so
   qt.force_software_rendering:
     global: qt-quick
   qt.highdpi:

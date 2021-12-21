@@ -26,6 +26,7 @@ touchpad &              # Deactivate touchpad
 #ckb-next --background & # Start tastatur beleuchtung
 export LC_ALL=en_US.UTF-8 #Int Layout
 export USE_WOLFRAM_LD_LIBRARY_PATH=1
+export WEECHAT_HOME='/home/till/.config/weechat'
 sleep 2
 #vpn NL &
 update_musicbar &  #Update Music in dmw instantly when changed

@@ -1,4 +1,4 @@
-rm /home/till/.weechat/weechat.log
-cd /home/till/.weechat
+rm $WEECHAT_HOME/weechat.log
+
 sleep 1
 weechat
