@@ -195,6 +195,8 @@ endif
 
 " Runs a script that cleans out tex build files whenever I close out of a .tex file.
 	autocmd VimLeave *.tex !texclear %
+" Automatically Syncs the todo list when leaving the file
+	autocmd VimLeave /home/till/Documents/vimwiki/Notes_Lists/* !git commit -am "UpdateFromVim"; git push origin master; cd ~/
 
 " Copy selected text to system clipboard (requires gvim/nvim/vim-x11 installed):
 	vnoremap <C-c> "+y
@@ -207,12 +209,12 @@ inoremap jkj <Esc>
 
 " Ensure files are read as what I want:
 	let g:vimwiki_ext2syntax = {'.Rmd': 'markdown', '.rmd': 'markdown','.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+let g:vimwiki_automatic_nested_syntaxes = 1
 let g:vimwiki_global_ext = 0
 let g:GPGFilePattern = '*.\(gpg\|asc\|pgp\)\(.md\)\='  "encryption
 	map <leader>v :VimwikiIndex
-	let g:vimwiki_list = [{'path': '~/Documents/vimwiki/General', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/Documents/vimwiki/MT', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/Documents/vimwiki/mykb', 'syntax': 'markdown', 'ext': '.md'}]
-
-
+	"let g:vimwiki_list = [{'path': '~/Documents/vimwiki/General', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/Documents/vimwiki/MT', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/Documents/vimwiki/mykb', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{"path": '~/Documents/vimwiki/mykb', "path_html": '/home/till/Website/mykb.dieminger.ch', "syntax": 'markdown', "ext": '.md', "custom_wiki2html": 'wikihtml', "force": 1, "auto_export": 1}, {'path': '~/Documents/vimwiki/General', 'syntax': 'markdown', 'ext': '.md'}, {'path': '~/Documents/vimwiki/MT', 'syntax': 'markdown', 'ext': '.md'},{'path': '~/Documents/vimwiki/Notes_Lists', 'syntax': 'markdown', 'ext': '.md'}]
 
 	autocmd BufRead,BufNewFile /tmp/calcurse*,~/.calcurse/notes/* set filetype=markdown
 	autocmd BufRead,BufNewFile *.ms,*.me,*.mom,*.man set filetype=groff

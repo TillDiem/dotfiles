@@ -26,8 +26,7 @@ alias clip="xclip -selection clipboard"
 alias imgclip="xclip -selection clipboard -t image/png -i 1g6dg969txg51.png"
 alias cs='cdls'
 alias nd280-setup=". /home/till/nd280software/nd280SoftwarePilot/nd280SoftwarePilot.profile"
-alias chess='scid'
-alias mutt='neomutt'
+alias chess='scid' alias mutt='neomutt'
 alias csv='sc-im'
 alias sl='ls'
 alias mykb='nvim ~/Documents/vimwiki/mykb/index.md'
@@ -66,3 +65,5 @@ alias \
 alias config='/usr/bin/git --git-dir=/home/till/.cfg/ --work-tree=/home/till'
 alias config='/usr/bin/git --git-dir=/home/till/.cfg/ --work-tree=/home/till'
 alias config='/usr/bin/git --git-dir=/home/till/.cfg/ --work-tree=/home/till'
+alias list='cd ~/Documents/vimwiki/Notes_Lists/; git pull origin master; nvim ~/Documents/vimwiki/Notes_Lists/index.md'
+alias es='ssh -Y ESSOS'
