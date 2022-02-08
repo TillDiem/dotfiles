@@ -1,0 +1,23 @@
+#!/bin/sh
+date=$(date +"%Y-%m-%d")
+curl -s -o /tmp/menu.html "https://ethz.ch/en/campus/getting-to-know/cafes-restaurants-shops/gastronomy/menueplaene/offerDay.html?language=en&id=21&date=$date"
+
+echo "Fusion Meal"
+cat /tmp/menu.html | grep -A1 "Classic Menu" | tail -1 | html2text | head -1
+cat /tmp/menu.html | grep -A1 "Vegie Menu" | tail -1 | html2text | head -1
+
+echo ""
+
+curl -s -o /tmp/menu.html "https://ethz.ch/en/campus/getting-to-know/cafes-restaurants-shops/gastronomy/menueplaene/offerDay.html?language=en&id=20&date=$date"
+
+echo "Food Market Grill"
+cat /tmp/menu.html | grep -A1 "fire" | tail -1 | html2text | head -1
+cat /tmp/menu.html | grep -A1 "gril" | tail -1 | html2text | head -1
+echo ""
+
+
+curl -s -o /tmp/menu.html "https://ethz.ch/en/campus/getting-to-know/cafes-restaurants-shops/gastronomy/menueplaene/offerDay.html?language=en&id=19&date=$date"
+
+echo "Food Market Vegies"
+cat /tmp/menu.html | grep -A1 "green daily" | tail -1 | html2text | head -1
+cat /tmp/menu.html | grep -A1 "green delight" | tail -1 | html2text | head -1
