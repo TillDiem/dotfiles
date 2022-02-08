@@ -19,6 +19,7 @@ text/x-tex;vim %s
 #text/html;firefox %s
 application/pgp-encrypted; gpg -d '%s'; copiousoutput;
 application/pgp-keys; gpg --import '%s'; copiousoutput;
+application/msword; antiword %s ; copiousoutput
 text/calendar; calendaradd %s
 
 #Text

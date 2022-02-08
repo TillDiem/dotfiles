@@ -27,6 +27,12 @@ settings:
     - /etc/hosts
   content.blocking.method:
     global: both
+  content.desktop_capture:
+    https://meet.dieminger.ch: true
+  content.media.audio_capture:
+    https://meet.dieminger.ch: true
+  content.media.video_capture:
+    https://meet.dieminger.ch: true
   downloads.location.directory:
     global: ~/Downloads
   downloads.location.prompt:

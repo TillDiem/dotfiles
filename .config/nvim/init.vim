@@ -55,6 +55,10 @@ set termguicolors     " enable true colors support
 let ayucolor="dark" " for mirage version of theme
 colorscheme ayu
 
+"Allows to paste formated text without autoindent doing stupid shit
+set pastetoggle=<F11>
+
+
 "colorscheme nord
 
 set guifont=Droid\ Sans\ Mono\ Nerd\ Font\ Complete\ 12
@@ -470,6 +474,7 @@ autocmd FileType tex inoremap ;m \begin{align}<Enter><Enter>\end{align}<Esc>ki
 	autocmd FileType tex inoremap 	,sfr  \sfrac{}{<++>}<++><Esc>2T{i
         autocmd FileType tex inoremap ,beg \begin{DELRN}<Enter><++><Enter>\end{DELRN}<Enter><Enter><++><Esc>4k0fR:MultipleCursorsFind<Space>DELRN<Enter>c
 	autocmd FileType tex inoremap	,fra \begin{frame}<Enter><Enter>\end{frame}<Enter><Enter><++><Esc>3kA\frametitle{ }<Esc>i
+	autocmd FileType tex inoremap	,eq \begin{equation}<Enter><Enter>\end{equation}<Enter><Enter><++><Esc>3kA
 	autocmd FileType tex inoremap	,fi \begin{figure}<Enter><Enter>\end{figure}<Enter><Enter><++><Esc>3kA\includegraphics[]{<++>}<Esc>6hi
 
 """.bib
@@ -618,3 +623,6 @@ augroup Gitget
     autocmd!
     autocmd BufEnter * let b:git_branch = Gitbranch()
 augroup END
+
+
+au BufRead /tmp/mutt-* set tw=120
