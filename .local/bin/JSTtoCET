@@ -1,0 +1,4 @@
+echo $1 "in JST is:"
+string='TZ="Asia/Tokyo"'
+string2=$string\ $1
+date --date="$string2"
